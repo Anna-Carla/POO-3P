@@ -22,9 +22,8 @@ public class App {
                 int pontosEquipe2 = sc.nextInt();
 
                 partida.pontoPeriodo(pontosEquipe1, pontosEquipe2);
-            
- 
         }
+        
         System.out.println(partida.placar());
 
         System.out.print("Equipe vencedora: " + partida.verificarVencedor());
