@@ -14,7 +14,7 @@ public class App {
         Partida partida = new Partida(equipe1, equipe2);
 
         while (!partida.verificarEmpate()) {
-            for (int i = 1; i < 4; i++) {
+        
                 System.out.print("\nDigite a pontuação\n");
                 System.out.print(equipe1 + ": ");
                 int pontosEquipe1 = sc.nextInt();
@@ -22,7 +22,7 @@ public class App {
                 int pontosEquipe2 = sc.nextInt();
 
                 partida.pontoPeriodo(pontosEquipe1, pontosEquipe2);
-            }
+            
  
         }
         System.out.println(partida.placar());
