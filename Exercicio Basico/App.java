@@ -21,13 +21,13 @@ public class App {
                 System.out.print(equipe2 + ": ");
                 int pontosEquipe2 = sc.nextInt();
 
-                partida.pontuacaoPeriodo(pontosEquipe1, pontosEquipe2);
+                partida.pontoPeriodo(pontosEquipe1, pontosEquipe2);
             }
  
         }
         System.out.println(partida.placar());
 
-        System.out.println("Equipe vencedora: " + partida.verificarVencedor());
+        System.out.print("Equipe vencedora: " + partida.verificarVencedor());
 
         sc.close();
     }

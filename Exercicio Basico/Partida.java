@@ -14,7 +14,7 @@ public class Partida {
         this.periodo = 0;
     }
 
-    public void pontuacaoPeriodo(int pontosEquipe1, int pontosEquipe2) {
+    public void pontoPeriodo(int pontosEquipe1, int pontosEquipe2) {
         if (!verificarEmpate()) {
             ptEquipe1.add(pontosEquipe1);
             ptEquipe2.add(pontosEquipe2);
@@ -50,14 +50,14 @@ public class Partida {
             result += "PR" + i + "\t";
         }
 
-        result += "FINAL\n" + equipe1 + tabEquipe(equipe1);
+        result += "FINAL\n" + equipe1 + tab(equipe1);
         result += pontuacaoString(ptEquipe1) + "\n";
-        result += equipe2 + tabEquipe(equipe2);
+        result += equipe2 + tab(equipe2);
         result += pontuacaoString(ptEquipe2) + "\n";
         return result;
     }
 
-    private String tabEquipe(String equipe) {
+    private String tab(String equipe) {
         return (equipe.length() / 8 > 0) ? "\t" : "\t\t";
     }
 
