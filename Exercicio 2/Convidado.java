@@ -8,16 +8,14 @@ public class Convidado extends Frequentador {
         this.convites = new ArrayList<>();
     }
 
-    public boolean pesquisarConvite(Data data, String nome) {
+    public boolean pesquisarConvite(Data data, String idSocio) {
         for (Convite convite : convites) {
-            Socio socio = convite.getSocio(); 
-            if (socio.getNome().equals(nome) && convite.getData().equals(data)) {
-                return true; // O convite com a data e o nome especificados foi encontrado
+            if (convite.getIdSocio().equals(idSocio) && convite.getData().equals(data)) {
+                return true;
             }
         }
-        return false; // Nenhum convite correspondente foi encontrado
+        return false;
     }
-    
 
     @Override
     public boolean isSocio() {

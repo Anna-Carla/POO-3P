@@ -11,23 +11,33 @@ public class Clube {
 	}
 
 	public boolean addFrequentador(Frequentador novo) {
-		boolean resposta = true;
-		if (quantFreq == frequentadores.length)
-			resposta = false;
-		else {
-			for (int i = 0; i < quantFreq && resposta; i++) {
-				if (frequentadores[i].getId().equals(novo.getId()))
-					resposta = false;
-			}
-			if (resposta) {
-				frequentadores[quantFreq] = novo;
-				quantFreq++;
-			}
+		boolean resposta = false;
+		if (quantFreq == frequentadores.length) {
+			System.out.println("Limite de Frequentadores atingidos");
+		} else {
+			resposta = true;
+			frequentadores[quantFreq] = novo;
+			System.out.println("\nFrequentador Cadastrado\nID: " + frequentadores[quantFreq].getId() + "\nNome: "
+					+ frequentadores[quantFreq].getNome() + "\n");
+			quantFreq++;
 		}
 		return resposta;
 	}
 
-	
+	public void imprimirFrequentadores() {
+		System.out.println("\nLista de Frequentadores:");
+
+		for (int i = 0; i < quantFreq; i++) {
+			System.out.println("ID: " + frequentadores[i].getId());
+			System.out.println("Nome: " + frequentadores[i].getNome());
+			if (frequentadores[i].isSocio()) {
+				System.out.println("Tipo: Socio");
+			} else {
+				System.out.println("Tipo: Convidado");
+			}
+			System.out.println();
+		}
+	}
 
 	public void registrarVisita(String idFreq, Data data, Hora horaEntrada) {
 		for (int i = 0; i < quantFreq; i++) {
@@ -46,7 +56,7 @@ public class Clube {
 	}
 
 	public String relatorioVisitasData(Data data) {
-		
+
 		StringBuilder relat = new StringBuilder("Visitas em " + data + "\n");
 		for (int i = 0; i < quantFreq; i++) {
 			if (frequentadores[i].visitouClubeEm(data)) {
@@ -65,15 +75,6 @@ public class Clube {
 		return "Não existe este sócio";
 	}
 
-	public Socio buscarSocio(String idFrequentador) {
-		for (int i = 0; i < frequentadores.length; i++) {
-			if (idFrequentador.equals(frequentadores[i].getId())) {
-				return (Socio) frequentadores[i];
-			}
-		}
-		return null;
-	}
-
 	public Frequentador buscarFrequentador(String idFrequentador) {
 		for (int i = 0; i < frequentadores.length; i++) {
 			if (idFrequentador.equals(frequentadores[i].getId())) {
@@ -83,22 +84,30 @@ public class Clube {
 		return null;
 	}
 
-	public Convidado buscarConvidado(String idFrequentador) {
+	public Socio buscarSocio(String idFrequentador) {
+		Frequentador frequentadorAtual = buscarFrequentador(idFrequentador);
+		if (frequentadorAtual == null) {
+			return null;
+		}
 		for (int i = 0; i < frequentadores.length; i++) {
-			if (idFrequentador.equals(frequentadores[i].getId())) {
-				return (Convidado) frequentadores[i];
+			if (frequentadorAtual.isSocio()) {
+				return (Socio) frequentadores[i];
 			}
 		}
 		return null;
 	}
 
-	public boolean verificarConvite(Convidado convidado, Data data, String idSocio) {
-		if (convidado.pesquisarConvite(data, idSocio)) {
-			return true; // O convite foi encontrado para o convidado com a data e o nome do sócio
-							// especificados
-		} else {
-			return false; // O convite não foi encontrado
+	public Convidado buscarConvidado(String idFrequentador) {
+		Frequentador frequentadorAtual = buscarFrequentador(idFrequentador);
+		if (frequentadorAtual == null) {
+			return null;
 		}
+		for (int i = 0; i < frequentadores.length; i++) {
+			if (frequentadorAtual.isSocio()) {
+				return (Convidado) frequentadores[i];
+			}
+		}
+		return null;
 	}
 
 	public static boolean estaPresente() {

@@ -3,9 +3,9 @@ import java.util.List;
 
 public abstract class Frequentador {
     private static int ultimoId = 1;
-    private String id;
-    private String nome;
-    private List<Visita> visitas;
+    protected String id;
+    protected String nome;
+    protected List<Visita> visitas;
 
     public Frequentador(String nome) {
         this.id = gerarId();
@@ -24,6 +24,7 @@ public abstract class Frequentador {
     public void registrarVisita(Data data, Hora horaEntrada) {
         Visita visita = new Visita(this, data, horaEntrada);
         visitas.add(visita);
+        System.out.println("Visita Registrada");
     }
 
     public void registrarSaida(Data data, Hora horaSaida) {
