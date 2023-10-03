@@ -119,34 +119,34 @@ public class App {
         System.out.println("Id do Convidado: ");
         String idConvidado = leitura("Id do Convidado: ");
         Convidado convidado = clube.buscarConvidado(idConvidado);
-        if(convidado!= null){ 
-        System.out.println("Possui convite? ");
-        char resposta = sc.next().charAt(0);
-        if (resposta == 's' || resposta == 'S') {
-        System.out.println("Data da entrada: ");
-            Data data = registrarData();
-            System.out.println("Id do Socio: ");
-            String idSocio = sc.nextLine();
-            Socio socio = clube.buscarSocio(idSocio);
-            if(convidado.pesquisarConvite(data, idSocio)) {
-                if(socio.estaPresente()) {
-                    System.out.println("Informe o horário da entrada");
-                    Hora hora = registrarHora();
-                    clube.registrarVisita(idConvidado, data, hora);
-                    System.out.println("Entrada registrada com sucesso!");
+        if (convidado != null) {
+            System.out.println("Possui convite? ");
+            char resposta = sc.next().charAt(0);
+            if (resposta == 's' || resposta == 'S') {
+                System.out.println("Data da entrada: ");
+                Data data = registrarData();
+                System.out.println("Id do Socio: ");
+                String idSocio = sc.nextLine();
+                Socio socio = clube.buscarSocio(idSocio);
+                if (convidado.pesquisarConvite(data, idSocio)) {
+                    if (socio.estaPresente()) {
+                        System.out.println("Informe o horário da entrada");
+                        Hora hora = registrarHora();
+                        clube.registrarVisita(idConvidado, data, hora);
+                        System.out.println("Entrada registrada com sucesso!");
+                    } else {
+                        System.out.println("Socio não está presente");
+                    }
                 } else {
-                    System.out.println("Socio não está presente");
+                    System.out.println("Convite inválido");
                 }
-            } else {
-                System.out.println("Convite inválido");
+
+            } else if (resposta == 'n' || resposta == 'N') {
+                System.out.println("Entrada não é permitida");
             }
-            
-        } else if(resposta == 'n' || resposta == 'N') {
-            System.out.println("Entrada não é permitida");
+        } else {
+            System.out.println("Convidado não existe");
         }
-    } else {
-        System.out.println("Convidado não existe");
-    }
     }
 
     public static void registrarSaida(Clube clube) {
