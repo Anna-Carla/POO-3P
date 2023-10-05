@@ -1,21 +1,14 @@
 public class Convite {
-    private Convidado convidado;
+
+    protected Socio socio;
+    protected String idConvidado;
     private Data data;
-    private String idSocio;
 
-    public Convite(String idSocio, Convidado convidado, Data data) {
-        this.idSocio = idSocio;
-        this.convidado = convidado;
+
+    public Convite(String idConvidado, Socio socio, Data data) {
+        this.idConvidado = idConvidado;
+        this.socio = socio;
         this.data = data;
-    }
-
-    
-    public Convidado getConvidado() {
-        return convidado;
-    }
-
-    public void setConvidado(Convidado convidado) {
-        this.convidado = convidado;
     }
 
     public Data getData() {
@@ -26,14 +19,20 @@ public class Convite {
         this.data = data;
     }
 
-
-    public String getIdSocio() {
-        return idSocio;
+    public String getIdConvidado() {
+        return idConvidado;
     }
 
+    public void setIdConvidado(String idConvidado) {
+        this.idConvidado = idConvidado;
+    }
 
-    public void setIdSocio(String idSocio) {
-        this.idSocio = idSocio;
+    public Socio getSocio() {
+        return socio;
+    }
+
+    public void setSocio(Socio socio) {
+        this.socio = socio;
     }
 
 }

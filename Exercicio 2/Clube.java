@@ -43,16 +43,23 @@ public class Clube {
 		for (int i = 0; i < quantFreq; i++) {
 			if (idFreq.equals(frequentadores[i].getId())) {
 				frequentadores[i].registrarVisita(data, horaEntrada);
+				System.out.println("Visita Registrada para o frequentador com ID: " + idFreq);
+				return; // Encerra o loop após encontrar o frequentador
 			}
 		}
+		System.out.println("Frequentador com ID " + idFreq + " não encontrado.");
 	}
+
 
 	public void registrarSaida(String idFreq, Data data, Hora horaSaida) {
 		for (int i = 0; i < quantFreq; i++) {
 			if (idFreq.equals(frequentadores[i].getId())) {
 				frequentadores[i].registrarSaida(data, horaSaida);
+				System.out.println("Saída registrada para o frequentador com ID: " + idFreq);
+				return; // Encerra o loop após encontrar o frequentador
 			}
 		}
+		System.out.println("Frequentador com ID " + idFreq + " não encontrado.");
 	}
 
 	public String relatorioVisitasData(Data data) {
@@ -84,33 +91,8 @@ public class Clube {
 		return null;
 	}
 
-	public Socio buscarSocio(String idFrequentador) {
-		Frequentador frequentadorAtual = buscarFrequentador(idFrequentador);
-		if (frequentadorAtual == null) {
-			return null;
-		}
-		for (int i = 0; i < frequentadores.length; i++) {
-			if (frequentadorAtual.isSocio()) {
-				return (Socio) frequentadores[i];
-			}
-		}
-		return null;
-	}
-
-	public Convidado buscarConvidado(String idFrequentador) {
-		Frequentador frequentadorAtual = buscarFrequentador(idFrequentador);
-		if (frequentadorAtual == null) {
-			return null;
-		}
-		for (int i = 0; i < frequentadores.length; i++) {
-			if (frequentadorAtual.isSocio()) {
-				return (Convidado) frequentadores[i];
-			}
-		}
-		return null;
-	}
-
 	public static boolean estaPresente() {
 		return true;
 	}
+
 }

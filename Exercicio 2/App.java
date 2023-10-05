@@ -5,7 +5,18 @@ public class App {
 
     public static void main(String[] args) {
         sc = new Scanner(System.in);
-        Clube clube = new Clube(10); // Especifique o tamanho máximo de frequentadores
+        Clube clube = new Clube(10);
+
+        Socio s1 = new Socio("Anna");
+        clube.addFrequentador(s1);
+        Socio s2 = new Socio("Artur");
+        clube.addFrequentador(s2);
+        Convidado c1 = new Convidado("Davi");
+        clube.addFrequentador(c1);
+        Convidado c2 = new Convidado("Alex");
+        clube.addFrequentador(c2);
+        clube.imprimirFrequentadores();
+
         int opcao = 0;
         while (opcao != 7) {
             menu1();
@@ -17,7 +28,7 @@ public class App {
                     clube.imprimirFrequentadores();
                     break;
                 case 2:
-                    registrarEntradaFrequentador(clube);
+                    registrarEntrada(clube);
                     break;
                 case 3:
                     registrarSaida(clube);
@@ -26,7 +37,7 @@ public class App {
                     emitirConvite(clube);
                     break;
                 case 5:
-                    relatorioVisitasData(clube);
+                    // relatorioVisitasData(clube);
                     break;
                 case 6:
                     String idFreq = leitura("Digite o Id do Frequentador: ");
@@ -43,9 +54,11 @@ public class App {
                     System.out.println("Opção inválida. Tente novamente.");
             }
         }
+
     }
 
     public static void menu1() {
+        System.out.println();
         System.out.println("----- Menu -----");
         System.out.println("1. Cadastrar Frequentador");
         System.out.println("2. Registrar Entrada");
@@ -58,157 +71,43 @@ public class App {
         System.out.print("Escolha uma opção: ");
     }
 
-    public static boolean socioOuConvidado() {
-        String op = leitura("\nSócio ou Convidado?\n(1) Sócio\n(2) Convidado\nOpção");
-        if (op.equals("1")) {
-            return true;
-        } else if (op.equals("2")) {
-            return false;
-        } else {
-            System.out.println("Opção Inválida");
-            return socioOuConvidado();
-        }
-    }
-
-    // INICIO DA PARTE DO CADASTRO
-    public static void cadastrarSocio(Clube clube) {
-        String nome = leitura("Nome do Sócio: ");
-        Socio novoSocio = new Socio(nome);
-        clube.addFrequentador(novoSocio);
-    }
-
-    public static void cadastrarConvidado(Clube clube) {
-        String nome = leitura("Nome do Convidado: ");
-        Convidado novoConvidado = new Convidado(nome);
-        clube.addFrequentador(novoConvidado);
-    }
-
+    // CADASTRO
     public static void cadastrarFrequentador(Clube clube) {
-        if (socioOuConvidado()) {
-            cadastrarSocio(clube);
-        } else {
-            cadastrarConvidado(clube);
-        }
-    }
-    // FIM DA PARTE DO CADASTRO
-
-    public static void registrarEntradaFrequentador(Clube clube) {
-        if (socioOuConvidado()) {
-            registrarEntradaSocio(clube);
-        } else {
-            registrarEntradaConvidado(clube);
+        int opcaoSocioConvidado = Integer.parseInt(leitura("(1) Socio \n(2) Convidado\nOpção"));
+        String nome = leitura("\nNome");
+        if (opcaoSocioConvidado == 1) {
+            Socio novoSocio = new Socio(nome);
+            clube.addFrequentador(novoSocio);
+        } else if (opcaoSocioConvidado == 2) {
+            Convidado novoConvidado = new Convidado(nome);
+            clube.addFrequentador(novoConvidado);
         }
     }
 
-    public static void registrarEntradaSocio(Clube clube) {
-        String idSocio = leitura("Id do Socio: ");
-        Socio socio = clube.buscarSocio(idSocio);
-        if (socio != null) {
-            socio.setPresenca(true);
-            Data data = registrarData();
-            Hora hora = registrarHora();
-            clube.registrarVisita(idSocio, data, hora);
-        } else {
-            System.out.println("Socio não existe");
-        }
+    public static void registrarEntrada(Clube clube) {
+        String idFreq = leitura("Id do Frequentador");
+        Frequentador freq = clube.buscarFrequentador(idFreq);
+        Data data = registrarData();
+        Hora horaSaida = registrarHora();
+        clube.registrarVisita(idFreq, data, horaSaida);
     }
 
-    // Verificar o id do Conv, tem convite, id socio, socio está dentro, data do
-    // convite com a data que quer entrar
-    public static void registrarEntradaConvidado(Clube clube) {
-        System.out.println("Id do Convidado: ");
-        String idConvidado = leitura("Id do Convidado: ");
-        Convidado convidado = clube.buscarConvidado(idConvidado);
-        if (convidado != null) {
-            System.out.println("Possui convite? ");
-            char resposta = sc.next().charAt(0);
-            if (resposta == 's' || resposta == 'S') {
-                System.out.println("Data da entrada: ");
-                Data data = registrarData();
-                System.out.println("Id do Socio: ");
-                String idSocio = sc.nextLine();
-                Socio socio = clube.buscarSocio(idSocio);
-                if (convidado.pesquisarConvite(data, idSocio)) {
-                    if (socio.estaPresente()) {
-                        System.out.println("Informe o horário da entrada");
-                        Hora hora = registrarHora();
-                        clube.registrarVisita(idConvidado, data, hora);
-                        System.out.println("Entrada registrada com sucesso!");
-                    } else {
-                        System.out.println("Socio não está presente");
-                    }
-                } else {
-                    System.out.println("Convite inválido");
-                }
-
-            } else if (resposta == 'n' || resposta == 'N') {
-                System.out.println("Entrada não é permitida");
-            }
-        } else {
-            System.out.println("Convidado não existe");
-        }
+    // fazer cast transformando o freq em socio
+    public static void emitirConvite(Clube clube) {
+        String idSocio = leitura("Id Socio");
+        String idConvidado = leitura("Id do Convidado");
+        Frequentador freq1 = clube.buscarFrequentador(idSocio);
+        Socio socio = (Socio) freq1; // Fazendo o cast de Frequentador para Socio
+        Data data = registrarData();
+        socio.emitirConvite(socio, idConvidado, data);
     }
 
     public static void registrarSaida(Clube clube) {
-        String idFreq = leitura("Digite seu Id: ");
+        String idFreq = leitura("Id do Frequentador");
+        Frequentador freq = clube.buscarFrequentador(idFreq);
         Data data = registrarData();
-        Hora hora = registrarHora();
-        clube.registrarSaida(idFreq, data, hora);
-    }
-
-    public static boolean convidadoExiste(Clube clube) {
-        System.out.println("Id do Convidado: ");
-        String idConvidado = sc.nextLine();
-        Convidado convidado = clube.buscarConvidado(idConvidado);
-
-        if (convidado == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public static boolean socioExiste(Clube clube) {
-        System.out.println("Id do Socio: ");
-        String idSocio = sc.nextLine();
-        Socio socio = clube.buscarSocio(idSocio);
-        if (socio == null) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public static void emitirConvite(Clube clube) {
-        System.out.println("Você é Socio ou Convidado? ");
-        char resposta = sc.next().charAt(0);
-        if (resposta == 's' || resposta == 'S') {
-            String idSocio = sc.nextLine();
-            Socio socio = clube.buscarSocio(idSocio);
-            if (socioExiste(clube)) {
-                System.out.println("O convidado possui cadastro? ");
-                char resposta2 = sc.next().charAt(0);
-                if (resposta == 's' || resposta == 'S') {
-                    String idConvidado = sc.nextLine();
-                    Convidado convidado = clube.buscarConvidado(idConvidado);
-                    if (convidadoExiste(clube)) {
-                        Data data = registrarData();
-                        socio.emitirConvite(convidado, data);
-                    }
-
-                } else if (resposta2 == 'n' || resposta2 == 'N') {
-                    cadastrarConvidado(clube);
-                }
-            }
-
-        } else if (resposta == 'c' || resposta == 'C') {
-            System.out.println("Não é possível gerar um convite");
-        }
-    }
-
-    public static void relatorioVisitasData(Clube clube) {
-        Data dataRelatorio = registrarData();
-        clube.relatorioVisitasData(dataRelatorio);
+        Hora horaSaida = registrarHora();
+        clube.registrarSaida(idFreq, data, horaSaida);
     }
 
     public static String leitura(String mensagem) {

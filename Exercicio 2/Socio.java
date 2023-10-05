@@ -3,17 +3,18 @@ import java.util.List;
 
 public class Socio extends Frequentador {
     private List<Convite> convidadosDoSocio;
-    private boolean presenca = false;
+    protected boolean presenca = false;
 
     public Socio(String nome) {
         super(nome);
         this.convidadosDoSocio = new ArrayList<>();
     }
 
-    public Convite emitirConvite(Convidado convidado, Data data) {
+    public Convite emitirConvite(Socio socio, String idConvidado, Data data) {
         if (convidadosDoSocio.size() < 4) { // Verifica se o sócio pode emitir até 4 convites
-            Convite convite = new Convite(id, convidado, data);
+            Convite convite = new Convite(idConvidado, this, data);
             convidadosDoSocio.add(convite);
+            System.out.println("Convite emitido!");
             return convite;
         } else {
             System.out.println("Limite de convites mensais atingido para este sócio.");
@@ -21,7 +22,16 @@ public class Socio extends Frequentador {
         }
     }
 
-    public boolean estaPresente() {
+    @Override
+    public void registrarVisita(Data data, Hora horaEntrada) {
+        Visita visita = new Visita(this, data, horaEntrada);
+        visitas.add(visita);
+        presenca = true;
+        System.out.println("O Socio Entrou");
+    }
+
+
+    public boolean isPresenca() {
         return presenca;
     }
 
@@ -44,6 +54,14 @@ public class Socio extends Frequentador {
     @Override
     public boolean isSocio() {
         return true;
+    }
+
+    public List<Convite> getConvidadosDoSocio() {
+        return convidadosDoSocio;
+    }
+
+    public void setConvidadosDoSocio(List<Convite> convidadosDoSocio) {
+        this.convidadosDoSocio = convidadosDoSocio;
     }
 
 }
