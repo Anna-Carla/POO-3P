@@ -1,21 +1,18 @@
 import java.util.Scanner;
-
+/**
+ * Classe principal que contém o método main para executar o programa do clube.
+ */
 public class App {
     static Scanner sc;
 
+    /**
+     * Método principal que inicia a execução do programa do clube.
+     *
+     * @param args Os argumentos da linha de comando (não são usados neste programa).
+     */
     public static void main(String[] args) {
         sc = new Scanner(System.in);
         Clube clube = new Clube(10);
-
-        Socio s1 = new Socio("Anna");
-        clube.addFrequentador(s1);
-        Socio s2 = new Socio("Artur");
-        clube.addFrequentador(s2);
-        Convidado c1 = new Convidado("Davi");
-        clube.addFrequentador(c1);
-        Convidado c2 = new Convidado("Alex");
-        clube.addFrequentador(c2);
-        clube.imprimirFrequentadores();
 
         int opcao = 0;
         while (opcao != 7) {
@@ -25,7 +22,6 @@ public class App {
             switch (opcao) {
                 case 1:
                     cadastrarFrequentador(clube);
-                    clube.imprimirFrequentadores();
                     break;
                 case 2:
                     registrarEntrada(clube);
@@ -56,9 +52,11 @@ public class App {
                     System.out.println("Opção inválida. Tente novamente.");
             }
         }
-
     }
 
+    /**
+     * Exibe o menu principal do programa na saída padrão.
+     */
     public static void menu1() {
         System.out.println();
         System.out.println("----- Menu -----");
@@ -73,7 +71,11 @@ public class App {
         System.out.print("Escolha uma opção: ");
     }
 
-    // CADASTRO
+    /**
+     * Realiza o cadastro de um frequentador no clube.
+     *
+     * @param clube O clube onde o frequentador será cadastrado.
+     */
     public static void cadastrarFrequentador(Clube clube) {
         int opcaoSocioConvidado = Integer.parseInt(leitura("(1) Socio \n(2) Convidado\nOpção"));
         String nome = leitura("\nNome");
@@ -86,6 +88,11 @@ public class App {
         }
     }
 
+    /**
+     * Registra a entrada de um frequentador no clube.
+     *
+     * @param clube O clube onde a entrada será registrada.
+     */
     public static void registrarEntrada(Clube clube) {
         String idFreq = leitura("Id do Frequentador");
         Frequentador freq = clube.buscarFrequentador(idFreq);
@@ -94,18 +101,27 @@ public class App {
         clube.registrarVisita(idFreq, data, horaSaida);
     }
 
-    // fazer cast transformando o freq em socio
+    /**
+     * Emite um convite de um sócio para um convidado no clube.
+     *
+     * @param clube O clube onde o convite será emitido.
+     */
     public static void emitirConvite(Clube clube) {
         String idSocio = leitura("Id Socio");
         String idConvidado = leitura("Id do Convidado");
         Frequentador freq1 = clube.buscarFrequentador(idSocio);
         Frequentador freq2 = clube.buscarFrequentador(idConvidado);
         Convidado convidado = (Convidado) freq2;
-        Socio socio = (Socio) freq1; // Fazendo o cast de Frequentador para Socio
+        Socio socio = (Socio) freq1;
         Data data = registrarData();
         socio.emitirConvite(socio, convidado, data, idConvidado);
     }
 
+    /**
+     * Registra a saída de um frequentador do clube.
+     *
+     * @param clube O clube onde a saída será registrada.
+     */
     public static void registrarSaida(Clube clube) {
         String idFreq = leitura("Id do Frequentador");
         Frequentador freq = clube.buscarFrequentador(idFreq);
@@ -114,11 +130,22 @@ public class App {
         clube.registrarSaida(idFreq, data, horaSaida);
     }
 
+    /**
+     * Realiza a leitura de uma entrada do usuário e a retorna como uma string.
+     *
+     * @param mensagem A mensagem a ser exibida ao usuário.
+     * @return A entrada do usuário como uma string.
+     */
     public static String leitura(String mensagem) {
         System.out.print(mensagem + ": ");
         return sc.next();
     }
 
+    /**
+     * Registra uma data inserida pelo usuário.
+     *
+     * @return Um objeto Data representando a data inserida pelo usuário.
+     */
     public static Data registrarData() {
         System.out.print("Dia: ");
         int dia = sc.nextInt();
@@ -129,6 +156,11 @@ public class App {
         return new Data(dia, mes, ano);
     }
 
+    /**
+     * Registra uma hora inserida pelo usuário.
+     *
+     * @return Um objeto Hora representando a hora inserida pelo usuário.
+     */
     public static Hora registrarHora() {
         System.out.print("Hora: ");
         byte horas = sc.nextByte();
