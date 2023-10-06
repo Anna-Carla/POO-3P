@@ -1,15 +1,11 @@
 import java.util.Scanner;
+
 /**
  * Classe principal que contém o método main para executar o programa do clube.
  */
 public class App {
     static Scanner sc;
 
-    /**
-     * Método principal que inicia a execução do programa do clube.
-     *
-     * @param args Os argumentos da linha de comando (não são usados neste programa).
-     */
     public static void main(String[] args) {
         sc = new Scanner(System.in);
         Clube clube = new Clube(10);
@@ -131,10 +127,12 @@ public class App {
     }
 
     /**
-     * Realiza a leitura de uma entrada do usuário e a retorna como uma string.
-     *
-     * @param mensagem A mensagem a ser exibida ao usuário.
-     * @return A entrada do usuário como uma string.
+     * Encapsula uma leitura de teclado, com mensagem personalizada. A mensagem
+     * sempre é completada com ":". Retorna uma string
+     * que pode ser posteriormente convertida.
+     * 
+     * @param mensagem A mensagem a ser exibida, sem pontuação final.
+     * @return String lida do usuário.
      */
     public static String leitura(String mensagem) {
         System.out.print(mensagem + ": ");

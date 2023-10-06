@@ -6,20 +6,17 @@ import java.util.List;
  */
 public class Socio extends Frequentador {
     private List<Convite> convidadosDoSocio;
-    protected boolean presenca = false;
+    protected boolean presenca;
 
-    /**
-     * Cria uma instância da classe Socio com o nome especificado.
-     *
-     * @param nome O nome do sócio.
-     */
     public Socio(String nome) {
         super(nome);
         this.convidadosDoSocio = new ArrayList<>();
+        this.presenca = false;
     }
 
     /**
-     * Emite um convite para um convidado.
+     * Emite um convite para um convidado, com uma limitação de emissões com base na
+     * regra, ou seja 4 convites.
      *
      * @param socio       O sócio que está emitindo o convite.
      * @param convidado   O convidado que receberá o convite.
@@ -28,7 +25,7 @@ public class Socio extends Frequentador {
      * @return O convite emitido ou null se o limite de convites for atingido.
      */
     public Convite emitirConvite(Socio socio, Convidado convidado, Data data, String idConvidado) {
-        if (convidadosDoSocio.size() < 4) { // Verifica se o sócio pode emitir até 4 convites
+        if (convidadosDoSocio.size() < 4) {
             Convite convite = new Convite(idConvidado, this, data);
             convidadosDoSocio.add(convite);
             convidado.adicionarConvite(convite);
@@ -38,12 +35,19 @@ public class Socio extends Frequentador {
         }
     }
 
+    /**
+     * Registra uma visita do sócio ao clube, criando uma nova instância de Visita e
+     * adicionando-a à lista de visitas do sócio.
+     * Atualiza o status de presença do sócio.
+     *
+     * @param data        A data da visita.
+     * @param horaEntrada A hora de entrada da visita.
+     */
     @Override
     public void registrarVisita(Data data, Hora horaEntrada) {
         Visita visita = new Visita(this, data, horaEntrada);
         visitas.add(visita);
         presenca = true;
-        System.out.println("O Socio Entrou");
     }
 
     /**
@@ -68,7 +72,8 @@ public class Socio extends Frequentador {
      * Verifica se o sócio está presente no clube em uma data específica.
      *
      * @param data A data para verificar a presença.
-     * @return True se o sócio está presente na data especificada, false caso contrário.
+     * @return True se o sócio está presente na data especificada, false caso
+     *         contrário.
      */
     public boolean isPresenca(Data data) {
         for (Visita visita : visitas) {
@@ -79,61 +84,32 @@ public class Socio extends Frequentador {
         return false;
     }
 
-    /**
-     * Define a presença do sócio no clube.
-     *
-     * @param presenca True se o sócio está presente, false caso contrário.
-     */
-    public void setPresenca(boolean presenca) {
-        this.presenca = presenca;
-    }
-
-    /**
-     * Define a lista de convites feitos pelo sócio.
-     *
-     * @param convidadosDoSocio A lista de convites feitos pelo sócio.
-     */
-    public void setConvitesFeitos(List<Convite> convidadosDoSocio) {
-        this.convidadosDoSocio = convidadosDoSocio;
-    }
-
-    /**
-     * Obtém a lista de convites feitos pelo sócio.
-     *
-     * @return A lista de convites feitos pelo sócio.
-     */
-    public List<Convite> getConvitesFeitos() {
-        return convidadosDoSocio;
-    }
-
-    /**
-     * Obtém a quantidade de convites emitidos pelo sócio.
-     *
-     * @return A quantidade de convites emitidos pelo sócio.
-     */
-    public int getQuantidadeConvitesEmitidos() {
-        return convidadosDoSocio.size();
-    }
-
     @Override
     public boolean isSocio() {
         return true;
     }
 
-    /**
-     * Obtém a lista de convidados do sócio.
-     *
-     * @return A lista de convidados do sócio.
-     */
+    // GETTERS E SETTERS DA CLASSE
+    public void setPresenca(boolean presenca) {
+        this.presenca = presenca;
+    }
+
+    public void setConvitesFeitos(List<Convite> convidadosDoSocio) {
+        this.convidadosDoSocio = convidadosDoSocio;
+    }
+
+    public List<Convite> getConvitesFeitos() {
+        return convidadosDoSocio;
+    }
+
+    public int getQuantidadeConvitesEmitidos() {
+        return convidadosDoSocio.size();
+    }
+
     public List<Convite> getConvidadosDoSocio() {
         return convidadosDoSocio;
     }
 
-    /**
-     * Define a lista de convidados do sócio.
-     *
-     * @param convidadosDoSocio A lista de convidados do sócio.
-     */
     public void setConvidadosDoSocio(List<Convite> convidadosDoSocio) {
         this.convidadosDoSocio = convidadosDoSocio;
     }

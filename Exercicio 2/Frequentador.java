@@ -10,37 +10,16 @@ public abstract class Frequentador {
     protected String nome;
     protected List<Visita> visitas;
 
-    /**
-     * Cria uma instância da classe Frequentador com o nome especificado.
-     *
-     * @param nome O nome do frequentador.
-     */
     public Frequentador(String nome) {
         this.id = gerarId();
         this.nome = nome;
         this.visitas = new ArrayList<>();
     }
 
-    /**
-     * Obtém o ID do frequentador.
-     *
-     * @return O ID do frequentador.
-     */
-    public String getId() {
-        return id;
-    }
+
 
     /**
-     * Obtém o nome do frequentador.
-     *
-     * @return O nome do frequentador.
-     */
-    public String getNome() {
-        return nome;
-    }
-
-    /**
-     * Registra a entrada do frequentador no clube.
+     * Registra a entrada do frequentador no clube, recebendo a data e a hora.
      *
      * @param data        A data da entrada.
      * @param horaEntrada A hora de entrada.
@@ -51,7 +30,7 @@ public abstract class Frequentador {
     }
 
     /**
-     * Registra a saída do frequentador do clube.
+     * Registra a saída do frequentador do clube, percorrendo todas as visitas até encontrar com base na data.
      *
      * @param data       A data da saída.
      * @param horaSaida  A hora de saída.
@@ -100,7 +79,7 @@ public abstract class Frequentador {
      *
      * @return True se o frequentador é um sócio, false caso contrário.
      */
-    public abstract boolean isSocio(); // Método abstrato para verificar se é sócio ou convidado
+    public abstract boolean isSocio();
 
     /**
      * Gera um ID único para o frequentador.
@@ -109,5 +88,14 @@ public abstract class Frequentador {
      */
     private static String gerarId() {
         return String.valueOf(ultimoId++);
+    }
+
+    //GETS DA CLASSE
+    public String getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
     }
 }

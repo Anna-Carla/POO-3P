@@ -5,11 +5,7 @@ public class Clube {
     private Frequentador[] frequentadores;
     private int quantFreq;
 
-    /**
-     * Cria uma instância da classe Clube com um número mínimo de vagas para frequentadores.
-     *
-     * @param n O número mínimo de vagas disponíveis no clube (deve ser maior ou igual a 2).
-     */
+
     public Clube(int n) {
         if (n <= 2) {
             n = 2;
@@ -103,9 +99,9 @@ public class Clube {
      * @param idFrequentador O ID do frequentador a ser buscado.
      * @return O frequentador correspondente ao ID especificado, ou null se o ID não for encontrado.
      */
-    public Frequentador buscarFrequentador(String idFrequentador) {
+    public Frequentador buscarFrequentador(String idFreq) {
         for (int i = 0; i < frequentadores.length; i++) {
-            if (idFrequentador.equals(frequentadores[i].getId())) {
+            if (idFreq.equals(frequentadores[i].getId())) {
                 return frequentadores[i];
             }
         }
@@ -114,12 +110,12 @@ public class Clube {
     }
 
     /**
-     * Verifica se o clube está atualmente em funcionamento.
+     * Verifica se o frequentador está presente.
      *
-     * @return True se o clube está em funcionamento, false caso contrário.
+     * @return True se o frequentador estiver no clube, false caso contrário.
      */
-    public static boolean estaPresente() {
-        return true; // Esta implementação sempre retorna true, você pode personalizá-la conforme necessário.
+    public boolean estaPresente() {
+        return true;
     }
 }
 
