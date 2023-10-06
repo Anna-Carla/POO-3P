@@ -26,13 +26,12 @@ public abstract class Frequentador {
         visitas.add(visita);
         System.out.println("Visita Registrada");
     }
-    
+
     public void registrarSaida(Data data, Hora horaSaida) {
         for (Visita visita : visitas) {
             if (visita.getHoraSaida() == null) {
-                if (visita.getDataEntrada().equals(data) && isPresenca()) {
+                if (visita.getDataEntrada().equals(data)) {
                     visita.setHoraSaida(horaSaida);
-                    //preciso setar a presença para mudar para null tanto na classe socio e na classe convidado
                     break;
                 }
             }
@@ -55,8 +54,6 @@ public abstract class Frequentador {
         }
         return relat.toString();
     }
-
-    public abstract boolean isPresenca();
 
     public abstract boolean isSocio(); // Método para verificar se é sócio ou convidado
 

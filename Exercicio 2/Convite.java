@@ -4,7 +4,6 @@ public class Convite {
     protected String idConvidado;
     private Data data;
 
-
     public Convite(String idConvidado, Socio socio, Data data) {
         this.idConvidado = idConvidado;
         this.socio = socio;

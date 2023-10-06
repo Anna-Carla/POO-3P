@@ -37,14 +37,16 @@ public class App {
                     emitirConvite(clube);
                     break;
                 case 5:
-                    // relatorioVisitasData(clube);
+                    Data data = registrarData();
+                    System.out.println(clube.relatorioVisitasData(data));
                     break;
                 case 6:
                     String idFreq = leitura("Digite o Id do Frequentador: ");
-                    clube.relatorioVisitasFreq(idFreq);
+                    System.out.println(clube.relatorioVisitasFreq(idFreq));
                     break;
                 case 7:
-
+                    String idSocio = leitura("Digite o Id do Socio");
+                    System.out.println(clube.relatorioVisitasConvidados(idSocio));
                     break;
                 case 8:
                     System.out.println("Saindo do programa.");
@@ -97,9 +99,11 @@ public class App {
         String idSocio = leitura("Id Socio");
         String idConvidado = leitura("Id do Convidado");
         Frequentador freq1 = clube.buscarFrequentador(idSocio);
+        Frequentador freq2 = clube.buscarFrequentador(idConvidado);
+        Convidado convidado = (Convidado) freq2;
         Socio socio = (Socio) freq1; // Fazendo o cast de Frequentador para Socio
         Data data = registrarData();
-        socio.emitirConvite(socio, idConvidado, data);
+        socio.emitirConvite(socio, convidado, data, idConvidado);
     }
 
     public static void registrarSaida(Clube clube) {
@@ -116,25 +120,22 @@ public class App {
     }
 
     public static Data registrarData() {
-        Data data = new Data();
-        int dia, mes, ano;
         System.out.print("Dia: ");
-        sc.nextInt();
+        int dia = sc.nextInt();
         System.out.print("Mês: ");
-        sc.nextInt();
+        int mes = sc.nextInt();
         System.out.print("Ano: ");
-        sc.nextInt();
-        return data;
+        int ano = sc.nextInt();
+        return new Data(dia, mes, ano);
     }
 
     public static Hora registrarHora() {
-        Hora hora = new Hora();
         System.out.print("Hora: ");
         byte horas = sc.nextByte();
         System.out.print("Minuto: ");
         byte minutos = sc.nextByte();
         System.out.print("Segundo: ");
         byte segundos = sc.nextByte();
-        return hora;
+        return new Hora(horas, minutos, segundos);
     }
 }

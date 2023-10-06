@@ -40,26 +40,11 @@ public class Clube {
 	}
 
 	public void registrarVisita(String idFreq, Data data, Hora horaEntrada) {
-		for (int i = 0; i < quantFreq; i++) {
-			if (idFreq.equals(frequentadores[i].getId())) {
-				frequentadores[i].registrarVisita(data, horaEntrada);
-				System.out.println("Visita Registrada para o frequentador com ID: " + idFreq);
-				return; // Encerra o loop após encontrar o frequentador
-			}
-		}
-		System.out.println("Frequentador com ID " + idFreq + " não encontrado.");
+		buscarFrequentador(idFreq).registrarVisita(data, horaEntrada);
 	}
 
-
 	public void registrarSaida(String idFreq, Data data, Hora horaSaida) {
-		for (int i = 0; i < quantFreq; i++) {
-			if (idFreq.equals(frequentadores[i].getId())) {
-				frequentadores[i].registrarSaida(data, horaSaida);
-				System.out.println("Saída registrada para o frequentador com ID: " + idFreq);
-				return; // Encerra o loop após encontrar o frequentador
-			}
-		}
-		System.out.println("Frequentador com ID " + idFreq + " não encontrado.");
+		buscarFrequentador(idFreq).registrarSaida(data, horaSaida);
 	}
 
 	public String relatorioVisitasData(Data data) {
@@ -74,20 +59,21 @@ public class Clube {
 	}
 
 	public String relatorioVisitasFreq(String idFreq) {
-		for (int i = 0; i < quantFreq; i++) {
-			if (idFreq.equals(frequentadores[i].getId())) {
-				return frequentadores[i].relatorioVisitas();
-			}
-		}
-		return "Não existe este sócio";
+		return buscarFrequentador(idFreq).relatorioVisitas();
+	}
+
+	public String relatorioVisitasConvidados(String idFreq) {
+		Socio socio = (Socio) buscarFrequentador(idFreq);
+		return (socio.relatorioVisitasConvidados(this));
 	}
 
 	public Frequentador buscarFrequentador(String idFrequentador) {
 		for (int i = 0; i < frequentadores.length; i++) {
 			if (idFrequentador.equals(frequentadores[i].getId())) {
-				return (Frequentador) frequentadores[i];
+				return frequentadores[i];
 			}
 		}
+		System.out.println("ID de frequentador inexistente.");
 		return null;
 	}
 
